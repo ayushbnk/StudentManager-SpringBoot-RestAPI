@@ -41,26 +41,26 @@ public class StudentController {
         return new ResponseEntity<>(student.get(),HttpStatus.OK);
     }
 
-    @RequestMapping(value="/students/searchbyrollnumber/{rollnumber}", method= RequestMethod.GET)
-    public ResponseEntity<List<Student>> getStudentByRollNumber(@PathVariable("rollnumber") long rollNumber){
-        List<Student> students = studentService.getStudentListByRollNumber(rollNumber);
-        for(Student student:students){
-            System.out.println(student.toString());
-            System.out.println(student.getMarks());
-        }
+//    @RequestMapping(value="/students/searchbyrollnumber/{rollnumber}", method= RequestMethod.GET)
+//    public ResponseEntity<List<Student>> getStudentByRollNumber(@PathVariable("rollnumber") long rollNumber){
+//        List<Student> students = studentService.getStudentListByRollNumber(rollNumber);
+//        for(Student student:students){
+//            System.out.println(student.toString());
+//            System.out.println(student.getMarks());
+//        }
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        return new ResponseEntity<>(students,HttpStatus.OK);
+//    }
 
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<>(students,HttpStatus.OK);
-    }
-
-    @RequestMapping(value="/addstudent", method= RequestMethod.POST)
+    @RequestMapping(value="/student", method= RequestMethod.POST)
     public ResponseEntity<Object> addStudent(@RequestBody Student student){
         Student createdStudent = studentService.addStudent(student);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<>(createdStudent,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/updatemark/{studentID}", method= RequestMethod.PUT)
+    @RequestMapping(value="/mark/{studentID}", method= RequestMethod.PUT)
     public ResponseEntity<Object> updateMark(@PathVariable("studentID") long studentID,@RequestBody Marks mark){
         verifyIfStudentExists(studentID);
         Marks createdMark = markService.addMark(studentID,mark);
@@ -68,7 +68,7 @@ public class StudentController {
         return new ResponseEntity<>(createdMark,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/addmark/{studentID}", method= RequestMethod.POST)
+    @RequestMapping(value="/mark/{studentID}", method= RequestMethod.POST)
     public ResponseEntity<Object> addMark(@PathVariable("studentID") long studentID,@RequestBody Marks mark){
         verifyIfStudentExists(studentID);
         Marks createdMark = markService.addMark(studentID,mark);
@@ -76,14 +76,14 @@ public class StudentController {
         return new ResponseEntity<>(createdMark,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/deletestudent/{id}", method= RequestMethod.DELETE)
+    @RequestMapping(value="/student/{id}", method= RequestMethod.DELETE)
     public ResponseEntity<Object> deleteStudent(@PathVariable("id") long id){
         verifyIfStudentExists(id);
         studentService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value="/deletemark/{id}", method= RequestMethod.DELETE)
+    @RequestMapping(value="/mark/{id}", method= RequestMethod.DELETE)
     public ResponseEntity<Object> deleteMark(@PathVariable("id") long id){
         verifyIfMarksExists(id);
         markService.deleteMarks(id);
@@ -106,7 +106,7 @@ public class StudentController {
         return new ResponseEntity<>(students,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/subjecttoppers", method= RequestMethod.GET)
+    @RequestMapping(value="/subject/toppers", method= RequestMethod.GET)
     public ResponseEntity<Object> getALlSubjectToppers(){
         List<SubjectTopperDTO> toppers = studentService.getSubjectToppers();
 
